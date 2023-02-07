@@ -52,16 +52,16 @@ public class StudentRestController {
 		return ResponseEntity.ok(studentList);
 	}
 	
-	@GetMapping(path = "/students/{age}", produces = "application/json")
+	@GetMapping(path = "/students/age/{age}", produces = "application/json")
 	public ResponseEntity<List<Student>> getStudentsByAge(
 			@PathVariable("age")int age){
 		List<Student> studentList = this.studentService.getStudentsByAge(age);
 		return ResponseEntity.ok(studentList);
 	}
 	
-	@GetMapping(path = "/students/{id}", produces = "application/json")
+	@GetMapping(path = "/students/id/{id}", produces = "application/json")
 	public ResponseEntity<Student> getStudentById(
-			@PathVariable("id")int id)throws ResourceNotFoundException{
+			@PathVariable("id")int id) throws ResourceNotFoundException{
 		Student student = this.studentService.getStudentById(id);
 		return ResponseEntity.ok(student);
 	}
@@ -74,7 +74,7 @@ public class StudentRestController {
 		return new ResponseEntity<Student>(savedStudent, HttpStatus.CREATED);
 	}
 	//UPDATE
-	@PutMapping("/students/{id}")
+	@PutMapping("/students/id/{id}")
 	public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable("id")int id)
 	throws ResourceNotFoundException{
 		student.setIdstudent(id);
