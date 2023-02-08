@@ -69,7 +69,7 @@ public class StudentRestController {
 		return new ResponseEntity<Student>(updatedStudent, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/delete/id/{id}")
 	@ResponseBody
 	public ResponseEntity<String> deleteStudent(@PathVariable int id) throws ResourceNotFoundException{
 		this.studentService.deleteStudentById(id);

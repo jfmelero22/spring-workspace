@@ -16,6 +16,14 @@ public class SubscriptionController {
 	//inject via application.properties
 	@Value("${welcome.email}")
 	private String email;
+
+	@Value("${welcome.noemail}")
+	private String noemail;
+	
+	@Value("${welcome.message}")
+	private String message;
+	
+
 	
 	@GetMapping("/")
 	public String mainWithParam() {
@@ -30,9 +38,11 @@ public class SubscriptionController {
 			@RequestParam(name = "email", required = false, defaultValue = "") 
 			String email, Model model) {
 		if(email.equals("")) {
-			model.addAttribute("email", this.email);
+			model.addAttribute("email", noemail);
+			model.addAttribute("message", "");
 		}else {
 			model.addAttribute("email", email);
+			model.addAttribute("message", message);
 		}
 		return "subscription"; //view
 	}

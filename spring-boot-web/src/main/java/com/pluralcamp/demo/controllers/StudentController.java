@@ -59,12 +59,12 @@ public class StudentController {
 	public String deleteStudent(@PathVariable String id, Model model) {
 		System.out.println("Deleting student with id=" + id);
 		Mono<String> response = this.webClient.delete()
-				.uri("student/delete/", id)
+				.uri("student/delete/id/" + id)
 				.retrieve()
 				.bodyToMono(String.class);
-		 String message = response.block(); //Uncomment - do not modify
-		 model.addAttribute("message", message); //Uncomment - do not modify
-		return this.getStudents(model); //DO NOT MODIFY THIS LINE !!
+		 String message = response.block(); 
+		 model.addAttribute("message", message); 
+		return this.getStudents(model); 
 	}	
 
 }
