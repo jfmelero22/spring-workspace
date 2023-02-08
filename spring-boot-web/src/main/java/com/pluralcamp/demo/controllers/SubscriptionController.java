@@ -37,3 +37,4 @@ public class SubscriptionController {
 		return "subscription"; //view
 	}
 }
+

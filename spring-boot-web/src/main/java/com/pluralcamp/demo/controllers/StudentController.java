@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -18,31 +19,28 @@ import reactor.core.publisher.Mono;
 @Controller
 public class StudentController {
 
-	private WebClient webClient = 
+	private WebClient webClient =
 			WebClient.create(SpringBootWebApplication.API_URL);
-	
+
 	@GetMapping("/students")
-	public String getStudents(Model model) {
-		Mono <List<Student>> response = this.webClient.get()
-				.uri("/student/students")
-				.accept(MediaType.APPLICATION_JSON)
-				.retrieve()
-				.bodyToMono(new ParameterizedTypeReference<List<Student>>() {});
+	public String getStudents(Model model){
+		Mono<List<Student>> response =  this.webClient.get()
+		.uri("/student/students")
+		.accept(MediaType.APPLICATION_JSON)
+		.retrieve()
+		.bodyToMono(new ParameterizedTypeReference<List<Student>>() {});
 		List<Student> studentList = response.block();
 		model.addAttribute("students", studentList);
 		return "students";
 	}
-	//PARA FORM -->
-	//cuando accedes a la url de la plantilla, hay que asignarle el estudiante.
-	// En el model.addAttribute("student") --> El student corresponde al
-	//{student} de la plantilla.
 	
 	@GetMapping("/addStudent")
 	public String addStudent(Model model) {
 		model.addAttribute("student", new Student());
 		return "addStudent";
 	}
-	//Añadir un nuevo estudiante a la base de deatos atraves de la API.
+	
+	//To add a new Student
 	@PostMapping("/addStudent")
 	public String addStudent(Student student, Model model) {
 		Mono<Student> response = this.webClient.post()
@@ -52,8 +50,21 @@ public class StudentController {
 				.retrieve()
 				.bodyToMono(new ParameterizedTypeReference<Student>() {});
 		Student createdStudent = response.block();
-		model.addAttribute("student", createdStudent);
-		return "student";
+		model.addAttribute("createdStudent", createdStudent);
+		//return "students";
+		return this.getStudents(model);
 	}
 	
+	@GetMapping(path="/students/delete/{id}")
+	public String deleteStudent(@PathVariable String id, Model model) {
+		System.out.println("Deleting student with id=" + id);
+		Mono<String> response = this.webClient.delete()
+				.uri("student/delete/id/", id)
+				.retrieve()
+				.bodyToMono(String.class);
+		 String message = response.block(); //Uncomment - do not modify
+		 model.addAttribute("message", message); //Uncomment - do not modify
+		return this.getStudents(model); //DO NOT MODIFY THIS LINE !!
+	}	
+
 }

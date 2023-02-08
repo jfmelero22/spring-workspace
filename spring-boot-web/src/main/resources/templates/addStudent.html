@@ -35,19 +35,33 @@ table.center {
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
-					<h2>Add a new student</h2>
-					<div class="single input-group">
+					<div class="single">
 						<form action="#" th:action="@{/addStudent}" th:object="${student}"
-							method="post">
-							<input type="hidden" value="0" th:field="*{idstudent}" /> <input
-								type="text" class="form-control" th:field="*{name}"
-								placeholder="Enter your name" /> <input type="text"
-								class="form-control" th:field="*{surname}"
-								placeholder="Enter your surname" /> <input type="text"
-								pattern="\d*" class="form-control" th:field="*{age}"
-								placeholder="Enter your age" /><span class="input-group-btn">
+							method="post" class="input-group">
+							<fieldset>
+							<input type="hidden" value="0" th:field="*{idstudent}" /> 
+							<p class="form-control">
+							<label for="name">Name: </label>
+							<input id="name"
+								type="text" th:field="*{name}"
+								placeholder="Enter your name" /> 
+							</p>
+							<p class="form-control">	
+							<label for="surname">Surname: </label>
+							<input type="text" id="surname"
+								th:field="*{surname}"
+								placeholder="Enter your surname" />
+							</p>
+							<p class="form-control"> 
+							<label for="age">Age: </label>	
+							<input type="text" id="age"
+								pattern="\d*"  th:field="*{age}"
+								placeholder="Enter your age" />
+							</p>
+							<p class="input-group-btn">
 								<button class="btn btn-theme" type="submit">Submit</button>
-							</span>
+							</p>
+							</fieldset>
 						</form>
 					</div>
 				</div>

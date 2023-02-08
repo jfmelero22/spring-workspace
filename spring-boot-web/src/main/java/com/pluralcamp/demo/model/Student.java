@@ -1,4 +1,5 @@
 package com.pluralcamp.demo.model;
+
 public class Student {
 
 	private int idstudent;
@@ -42,3 +43,4 @@ public class Student {
 	}
 
 }
+
